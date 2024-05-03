@@ -60,7 +60,7 @@
     /// <summary>
     /// Dequeue the next value and return it
     /// </summary>
-    /// <exception cref="IndexOutOfRangeException">If queue is empty</exception>
+    /// <exception cref="IndexOutOfRangeException">If the queue is empty</exception>
     /// <returns>First integer in the queue</returns>
     private int Dequeue() {
         if (_queue.Count <= 0)
