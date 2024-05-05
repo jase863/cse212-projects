@@ -15,7 +15,10 @@
         // Console.WriteLine(players);    // This can be un-commented out for debug help
         while (players.Length > 0)
             players.GetNextPerson();
-        // Defect(s) Found: 
+        // Defect(s) Found: The players were printed out in the wrong order. Each player was listed for all of their turns at once, rather than taking turns.
+        // The players were removed from the front of the queue and added back to the front of the queue after their turn was over. Because queues are FIFO, 
+        // they continued to be removed from the front of the queue until their turns were all used up. This meant that all of their turns were taken at once.
+        // I changed the Enqueue() method to add the person back to the back of the queue. This fixed all issues for this test.
 
         Console.WriteLine("---------");
 
@@ -38,7 +41,11 @@
         while (players.Length > 0)
             players.GetNextPerson();
 
-        // Defect(s) Found: 
+        // Defect(s) Found: The players were printed out in the wrong order. George was added and displayed for all turns in the middle of Tim's turns.
+        // Each player was listed for all of their turns at once, rather than taking turns. The players were removed from the front of the queue and added 
+        // back to the front of the queue after their turn was over. Because queues are FIFO, they continued to be removed from the front of the queue until
+        // their turns were all used up. This meant that all of their turns were taken at once. I changed the Enqueue() method to add the person back to the
+        // back of the queue. This fixed all issues for this test.
 
         Console.WriteLine("---------");
 
@@ -56,7 +63,9 @@
             players.GetNextPerson();
             // Console.WriteLine(players);
         }
-        // Defect(s) Found: 
+        // Defect(s) Found: Tim's turns weren't continuing, even though the turn count started at 0. The code that players that 
+        // started with "0" turns was missing from the GetNextPerson() method. I added an else if statement to the method that
+        // continued to add players that started with 0 turns. This fixed the issues and provided the expected result.
 
         Console.WriteLine("---------");
 
@@ -73,7 +82,9 @@
             players.GetNextPerson();
             // Console.WriteLine(players);
         }
-        // Defect(s) Found: 
+        // Defect(s) Found: Instead of continuing after the first round of turns, Tim's turns stopped, and Sue's continued till they
+        // were out. I changed the code to include both 0 and numbers less than 0 in the "Forever" category. This fixed the issues and
+        // provided the expected result.
 
         Console.WriteLine("---------");
 
@@ -83,6 +94,6 @@
         Console.WriteLine("Test 5");
         players = new TakingTurnsQueue();
         players.GetNextPerson();
-        // Defect(s) Found:
+        // Defect(s) Found: No defects
     }
 }
