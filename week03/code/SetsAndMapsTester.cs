@@ -1,3 +1,6 @@
+using System.Diagnostics;
+using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 
 public static class SetsAndMapsTester {
@@ -111,8 +114,57 @@ public static class SetsAndMapsTester {
         // To display the pair correctly use something like:
         // Console.WriteLine($"{word} & {pair}");
         // Each pair of words should displayed on its own line.
-    }
 
+        HashSet<string> hashSet1 = new HashSet<string>();
+        HashSet<string> hashSet2 = new HashSet<string>();
+        
+        foreach (string word in words){
+            if (!hashSet1.Contains(word)){
+                hashSet1.Add(word);
+            }
+        }
+
+        foreach (string addedWord in hashSet1){
+
+            if (!hashSet1.Contains(addedWord)){
+                hashSet1.Add(addedWord);
+            }
+            string newWord;
+
+            char [] charsOfWord = addedWord.ToCharArray();
+
+            Array.Reverse(charsOfWord);
+
+            newWord = new string(charsOfWord);
+
+            if(!hashSet1.Contains(newWord)){
+                hashSet1.Remove(addedWord);
+            }
+
+            if(newWord == addedWord){
+                hashSet1.Remove(addedWord);
+            }
+
+        }
+
+        foreach (var pairing in hashSet1){
+
+            string newWord;
+
+            char [] charsOfWord = pairing.ToCharArray();
+
+            Array.Reverse(charsOfWord);
+
+            newWord = new string(charsOfWord);
+
+            hashSet2.Add(newWord);
+
+            if (!hashSet2.Contains(pairing)){
+                Console.WriteLine($"{newWord} & {pairing}");
+            }
+            
+        }
+    }
     /// <summary>
     /// Read a census file and summarize the degrees (education)
     /// earned by those contained in the file.  The summary
@@ -131,7 +183,16 @@ public static class SetsAndMapsTester {
         var degrees = new Dictionary<string, int>();
         foreach (var line in File.ReadLines(filename)) {
             var fields = line.Split(",");
-            // Todo Problem 2 - ADD YOUR CODE HERE
+
+            string degree = fields[3];
+
+            if (!degrees.ContainsKey(degree)){
+                degrees[degree] = 1;
+                }
+
+            else{
+                degrees[degree] += 1;
+            }
         }
 
         return degrees;
@@ -158,8 +219,71 @@ public static class SetsAndMapsTester {
     /// #############
     private static bool IsAnagram(string word1, string word2) {
         // Todo Problem 3 - ADD YOUR CODE HERE
-        return false;
+        Dictionary<char, int> words1 = new Dictionary<char, int>();
+        Dictionary<char, int> words2 = new Dictionary<char, int>();
+
+        bool result = false;
+        word1 = word1.ToLower();
+        word2 = word2.ToLower();
+
+        if (word1.Contains(" ")){
+            word1 = word1.Trim().Replace(" ", "");
+        }
+
+        if (word2.Contains(" ")){
+            word2 = word2.Trim().Replace(" ", "");
+        }
+
+        if (word1.Length != word2.Length){
+            return false;
+        }
+
+        else{
+            
+            foreach (char character in word1){
+
+                if (!words1.ContainsKey(character)){
+                    words1[character] = 1;
+                }
+
+                else{
+                    words1[character] += 1;
+                }
+            }
+
+            foreach (char letter in word2){
+                 
+                if (!words1.ContainsKey(letter)){
+                    return false;
+                }
+
+                else if (!words2.ContainsKey(letter)){
+                    words2[letter] = 1;
+                }
+
+                else{
+                    words2[letter] += 1;
+                }
+            }
+
+            foreach (char addedLetter in word1){
+
+                if (!words2.ContainsKey(addedLetter)){
+                    return false;
+                }
+
+                else if(words1[addedLetter] == words2[addedLetter]){
+                    result = true;
+                    }
+                    
+                else{
+                    return false;
+                }
+            }
+        }
+        return result;
     }
+    
 
     /// <summary>
     /// Sets up the maze dictionary for problem 4
@@ -203,6 +327,7 @@ public static class SetsAndMapsTester {
             { (6, 5), new[] { false, false, false, false } },
             { (6, 6), new[] { true, false, false, false } }
         };
+        
         return map;
     }
 
@@ -230,10 +355,15 @@ public static class SetsAndMapsTester {
         var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
         var featureCollection = JsonSerializer.Deserialize<FeatureCollection>(json, options);
-
+        
         // TODO:
         // 1. Add code in FeatureCollection.cs to describe the JSON using classes and properties 
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to print out each place a earthquake has happened today and its magitude.
+        foreach (var attribute in featureCollection.Features){
+
+            Console.WriteLine($"{attribute.Properties.place} - Mag {attribute.Properties.mag}");
+
+        }
     }
 }
