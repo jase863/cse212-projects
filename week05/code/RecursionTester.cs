@@ -147,7 +147,15 @@ public static class RecursionTester {
     /// </summary>
     public static int SumSquaresRecursive(int n) {
         // TODO Start Problem 1
-        return 0;
+        
+        if (n <= 0){
+            return 0;
+        }
+
+        else{
+            return (n*n) + SumSquaresRecursive(n-1);;
+        }
+        
     }
 
     /// <summary>
@@ -171,6 +179,23 @@ public static class RecursionTester {
     /// </summary>
     public static void PermutationsChoose(string letters, int size, string word = "") {
         // TODO Start Problem 2
+        
+        if (size == 1){
+            
+            foreach (var letter in letters){
+                Console.WriteLine(letter);
+            };
+        }
+        else{
+
+            for (var i = 0; i < letters.Length; i++){
+
+                var removedLetter = letters.Remove(i, 1);
+
+                PermutationsChoose(removedLetter, size, word + letters[i]);
+            }
+        }
+        
     }
 
     /// <summary>
@@ -249,6 +274,10 @@ public static class RecursionTester {
     /// </summary>
     public static void WildcardBinary(string pattern) {
         // TODO Start Problem 4
+        
+        if (!pattern.Contains(char.Parse("*"))){
+
+        }
     }
 
     /// <summary>
@@ -258,11 +287,11 @@ public static class RecursionTester {
     public static void SolveMaze(Maze maze, int x = 0, int y = 0, List<ValueTuple<int, int>>? currPath = null) {
         // If this is the first time running the function, then we need
         // to initialize the currPath list.
-        if (currPath == null)
+        if (currPath == null){
             currPath = new List<ValueTuple<int, int>>();
+        }
 
         // currPath.Add((1,2)); // Use this syntax to add to the current path
-
         // TODO Start Problem 5
         // ADD CODE HERE
 
