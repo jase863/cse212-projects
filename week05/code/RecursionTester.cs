@@ -179,20 +179,36 @@ public static class RecursionTester {
     /// </summary>
     public static void PermutationsChoose(string letters, int size, string word = "") {
         // TODO Start Problem 2
-        
-        if (size == 1){
+
+        if (word.Length == 0 & size == 1){
             
             foreach (var letter in letters){
                 Console.WriteLine(letter);
             };
         }
-        else{
 
+        else{
+            
             for (var i = 0; i < letters.Length; i++){
 
-                var removedLetter = letters.Remove(i, 1);
+                if (size > 0) {
+                
+                var removedChar = letters.Remove(i, 1);
 
-                PermutationsChoose(removedLetter, size, word + letters[i]);
+                PermutationsChoose(removedChar, size-1, word + letters[i]);   
+            }
+
+                else{
+                    
+                    Console.WriteLine(word);
+
+                    size = word.Length;
+
+                    var removedChar = letters.Remove(i, 1);
+
+                    PermutationsChoose(removedChar, size, word + letters[i]); 
+                }
+                  
             }
         }
         
