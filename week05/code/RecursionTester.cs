@@ -304,12 +304,9 @@ public static class RecursionTester {
         // TODO Start Problem 4
         
         if (!pattern.Contains(char.Parse("*"))){
-            Console.WriteLine(pattern);
-        }
-
-        else{
             
         }
+
     }
 
     /// <summary>
@@ -323,10 +320,35 @@ public static class RecursionTester {
             currPath = new List<ValueTuple<int, int>>();
         }
 
+        if(maze.IsEnd(x, y)){
+            Console.WriteLine(currPath.AsString()); // Use this to print out your path when you find the solution
+        }
+
+        
+    }
         // currPath.Add((1,2)); // Use this syntax to add to the current path
         // TODO Start Problem 5
         // ADD CODE HERE
 
-        // Console.WriteLine(currPath.AsString()); // Use this to print out your path when you find the solution
-    }
+    //     else{
+
+    //             for (var i = 0; i < (maze.Width - 1); i++){
+
+    //                 if (maze.IsValidMove(currPath, x, y)){
+    //                     currPath.Add((x, y));
+    //                 }
+                    
+    //                 else{
+    //                     SolveMaze(maze, x+1, y, currPath);
+    //                 }
+    //             }
+    //                 if (y < (maze.Height - 1)){
+    //                 SolveMaze(maze, x=0, y+1, currPath);
+    //             }
+
+                
+            
+            
+    //     }
+    // }
 }
